@@ -1,0 +1,25 @@
+{
+  "ecmaVersion": 8,
+  "libs": [
+    "react",
+    "jquery",
+    "browser"
+  ],
+  "loadEagerly": [
+    "/Users/romanpinchuk/Dropbox/Coursera/Front-End_Bootstrap_4/git-test/React/confusion/*.js",
+    "/Users/romanpinchuk/Dropbox/Coursera/Front-End_Bootstrap_4/git-test/React/confusion/src/components/*.js"
+  ],
+  "dontLoad": [
+    "node_modules/**"
+  ],
+  "plugins": {
+    "doc_comment": true,
+    "node": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    },
+    "node_resolve": {},
+    "es_modules": {}
+  }
+}
