@@ -70,22 +70,22 @@ class Header extends Component {
               <Nav navbar="navbar">
                 <NavItem>
                   <NavLink className="nav-link" to="/home">
-                    <span className="fa fa-home fa-lg"> Home</span>
+                    <span className="fa fa-home fa-md"> Home</span>
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/aboutus">
-                    <span className="fa fa-info fa-lg"> About Us</span>
+                    <span className="fa fa-info fa-md"> About Us</span>
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/menu">
-                    <span className="fa fa-list fa-lg"> Menu</span>
+                    <span className="fa fa-list fa-md"> Menu</span>
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink className="nav-link" to="/contactus">
-                    <span className="fa fa-address-card fa-lg">
+                    <span className="fa fa-address-card fa-md">
                       {" "}
                       Contact Us
                     </span>
@@ -95,7 +95,7 @@ class Header extends Component {
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <Button outline onClick={this.toggleModal}>
-                    <span className="fa fa-sign-in fa-lg" /> Login
+                    <span className="fa fa-sign-in fa-md" /> Login
                   </Button>
                 </NavItem>
               </Nav>
