@@ -10,9 +10,24 @@ import {
 import { Link } from "react-router-dom";
 
 function About(props) {
-  const leaders = props.leaders.map(leader => {
-    return <p>Leader {leader.name}</p>;
-  });
+  let RenderLeader = leader => {
+    return (
+      <Media key={leader.id}>
+        <Media left href="#">
+          <Media object data-src={leader.image} alt={leader.name} />
+        </Media>
+        <Media body>
+          <Media heading>
+            <p>{leader.name}</p>
+            <i>{leader.designation}</i>
+          </Media>
+          {leader.description}
+        </Media>
+      </Media>
+    );
+  };
+
+  const leaders = props.leaders.map(leader => RenderLeader(leader));
 
   return (
     <div className="container">

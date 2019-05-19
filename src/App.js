@@ -13,7 +13,6 @@ class App extends Component {
       </BrowserRouter>
     );
   }
-  dwdw;
 }
 
 export default App;
