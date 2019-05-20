@@ -1,14 +1,15 @@
 import React from "react";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
   Card,
   CardImg,
   CardText,
   CardBody,
-  CardTitle,
-  Breadcrumb,
-  BreadcrumbItem
+  CardTitle
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import Comment from "./CommentForm";
 
 function RenderDish({ dish }) {
   if (dish != null) {
@@ -75,7 +76,10 @@ const DishDetail = props => {
           <RenderDish dish={props.dish} />
         </div>
         <div className="col-sm-12 col-md-5 m-1">
-          <RenderComments dish={props.comments} />{" "}
+          <RenderComments dish={props.comments} />
+        </div>
+        <div className="col-sm-12 col-md-5 m-1">
+          <Comment />
         </div>
       </div>
     </div>
