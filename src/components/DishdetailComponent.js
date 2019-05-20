@@ -27,7 +27,7 @@ function RenderDish({ dish }) {
   if (dish != null)
     return (
       <Card>
-        <CardImg top="top" src={dish.image} alt={dish.name} />
+        <CardImg top src={dish.image} alt={dish.name} />
         <CardBody>
           <CardTitle>{dish.name}</CardTitle>
           <CardText>{dish.description}</CardText>
@@ -36,8 +36,7 @@ function RenderDish({ dish }) {
     );
   else return <div />;
 }
-
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments != null) {
     let commentList = comments.map(comment => {
       return (
@@ -60,12 +59,11 @@ function RenderComments({ comments }) {
       <React.Fragment>
         <h3>Comments</h3>
         {commentList}
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </React.Fragment>
     );
   } else return <div />;
 }
-
 const DishDetail = props => {
   console.log("called");
   if (props.dish != null)
@@ -76,7 +74,7 @@ const DishDetail = props => {
             <BreadcrumbItem>
               <Link to="/menu">Menu</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem active="active">{props.dish.name}</BreadcrumbItem>
+            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
           </Breadcrumb>
           <div className="col-12">
             <h3>{props.dish.name}</h3>
@@ -88,13 +86,19 @@ const DishDetail = props => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-            <RenderComments comments={props.comments} />
+            <RenderComments
+              comments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+            />
           </div>
         </div>
       </div>
     );
   else return <div />;
 };
+
+export default DishDetail;
 
 class CommentForm extends Component {
   constructor(props) {
@@ -109,14 +113,19 @@ class CommentForm extends Component {
     });
   };
   handleSubmit(values) {
+    console.log(values);
     this.toggleModal();
-    console.log("Current State is: " + JSON.stringify(values));
-    alert("Current State is: " + JSON.stringify(values));
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.Comment
+    );
   }
   render() {
     return (
       <React.Fragment>
-        <Button outline="outline" onClick={this.toggleModal}>
+        <Button outline onClick={this.toggleModal}>
           <span className="fa fa-pencil fa-lg" /> Submit Comment
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
@@ -142,25 +151,25 @@ class CommentForm extends Component {
                 </Col>
               </Row>
               <Row className="form-group">
-                <Label htmlFor="name" md={2}>
+                <Label htmlFor="author" md={2}>
                   Your Name
                 </Label>
                 <Col md={10}>
                   <Control.text
-                    model=".name"
-                    id="name"
-                    name="name"
+                    model=".author"
+                    id="author"
+                    name="author"
                     placeholder="Your Name"
                     className="form-control"
                     validators={{
                       required,
-                      minLength: minLength(4),
+                      minLength: minLength(3),
                       maxLength: maxLength(15)
                     }}
                   />
                   <Errors
                     className="text-danger"
-                    model=".name"
+                    model=".author"
                     show="touched"
                     messages={{
                       required: "Required",
@@ -185,12 +194,7 @@ class CommentForm extends Component {
                 </Col>
               </Row>
               <Row className="form-group">
-                <Col
-                  md={{
-                    size: 1,
-                    offset: 2
-                  }}
-                >
+                <Col md={{ size: 1, offset: 2 }}>
                   <Button type="submit" color="primary">
                     Submit
                   </Button>
@@ -203,5 +207,3 @@ class CommentForm extends Component {
     );
   }
 }
-
-export default DishDetail;
