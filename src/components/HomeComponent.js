@@ -1,4 +1,5 @@
 import React from "react";
+import { Loading } from "./LoadingComponent";
 import {
   Card,
   CardImg,
@@ -7,19 +8,20 @@ import {
   CardTitle,
   CardSubtitle
 } from "reactstrap";
-import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
 
 function RenderCard({ item, isLoading, errMess }) {
   if (isLoading) {
     return <Loading />;
   } else if (errMess) {
     return <h4>{errMess}</h4>;
-  } else
+  } else if (item != null) {
     return (
       <Card>
-        <CardImg src={item.image} alt={item.name} />
+        <CardImg src={baseUrl + item.image} alt={item.name} />
         <CardBody>
           <CardTitle>{item.name}</CardTitle>
+          {/* If item.designation is not null do fist, if not do second. */}
           {item.designation ? (
             <CardSubtitle>{item.designation}</CardSubtitle>
           ) : null}
@@ -27,8 +29,10 @@ function RenderCard({ item, isLoading, errMess }) {
         </CardBody>
       </Card>
     );
+  } else {
+    return <div />;
+  }
 }
-
 function Home(props) {
   return (
     <div className="container">
@@ -41,7 +45,11 @@ function Home(props) {
           />
         </div>
         <div className="col-12 col-md m-1">
-          <RenderCard item={props.promotion} />
+          <RenderCard
+            item={props.promotion}
+            isLoading={props.promoLoading}
+            errMess={props.promoErrMess}
+          />
         </div>
         <div className="col-12 col-md m-1">
           <RenderCard item={props.leader} />
@@ -50,5 +58,4 @@ function Home(props) {
     </div>
   );
 }
-
 export default Home;
