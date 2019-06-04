@@ -1,5 +1,4 @@
 import React from "react";
-import { Loading } from "./LoadingComponent";
 import {
   Card,
   CardImg,
@@ -8,15 +7,16 @@ import {
   CardTitle,
   CardSubtitle
 } from "reactstrap";
-import { baseUrl } from "../shared/baseUrl";
 import { FadeTransform } from "react-animation-components";
+import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 
 function RenderCard({ item, isLoading, errMess }) {
   if (isLoading) {
     return <Loading />;
   } else if (errMess) {
     return <h4>{errMess}</h4>;
-  } else if (item != null) {
+  } else {
     return (
       <FadeTransform
         in
@@ -36,10 +36,9 @@ function RenderCard({ item, isLoading, errMess }) {
         </Card>
       </FadeTransform>
     );
-  } else {
-    return <div />;
   }
 }
+
 function Home(props) {
   return (
     <div className="container">
@@ -59,10 +58,15 @@ function Home(props) {
           />
         </div>
         <div className="col-12 col-md m-1">
-          <RenderCard item={props.leader} />
+          <RenderCard
+            item={props.leader}
+            isLoading={props.leaderLoading}
+            errMess={props.leaderErrMess}
+          />
         </div>
       </div>
     </div>
   );
 }
+
 export default Home;

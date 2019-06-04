@@ -8,22 +8,25 @@ import {
   Row
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { Control, Form, Errors } from "react-redux-form";
 
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => val && (val.length >= len);
-const isNumber = (val) => !isNaN(Number(val));
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+const required = val => val && val.length;
+const maxLength = len => val => !val || val.length <= len;
+const minLength = len => val => val && val.length >= len;
+const isNumber = val => !isNaN(Number(val));
+const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 class Contact extends Component {
   constructor(props) {
     super(props);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleSubmit(values) {
     console.log("Current State is: " + JSON.stringify(values));
-    alert("Current State is: " + JSON.stringify(values));
+    this.props.feedback(values);
+    this.props.resetFeedbackForm();
   }
 
   render() {
@@ -74,7 +77,7 @@ class Contact extends Component {
               >
                 <i className="fa fa-phone" /> Call
               </a>
-              <a role="button" className="btn btn-info" href="www.github.com">
+              <a role="button" className="btn btn-info" href="www">
                 <i className="fa fa-skype" /> Skype
               </a>
               <a
@@ -92,7 +95,10 @@ class Contact extends Component {
             <h3>Send us Your Feedback</h3>
           </div>
           <div className="col-12 col-md-9">
-            <LocalForm onSubmit={values => this.handleSubmit(values)}>
+            <Form
+              model="feedback"
+              onSubmit={values => this.handleSubmit(values)}
+            >
               <Row className="form-group">
                 <Label htmlFor="firstname" md={2}>
                   First Name
@@ -105,7 +111,9 @@ class Contact extends Component {
                     placeholder="First Name"
                     className="form-control"
                     validators={{
-                      required, minLength: minLength(3), maxLength: maxLength(15)
+                      required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(15)
                     }}
                   />
                   <Errors
@@ -113,9 +121,9 @@ class Contact extends Component {
                     model=".firstname"
                     show="touched"
                     messages={{
-                      required: 'Required',
-                      minLength: 'Must be greater than 2 characters',
-                      maxLength: 'Must be 15 characters or less'
+                      required: "Required",
+                      minLength: "Must be greater than 2 characters",
+                      maxLength: "Must be 15 characters or less"
                     }}
                   />
                 </Col>
@@ -132,7 +140,9 @@ class Contact extends Component {
                     placeholder="Last Name"
                     className="form-control"
                     validators={{
-                      required, minLength: minLength(3), maxLength: maxLength(15)
+                      required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(15)
                     }}
                   />
                   <Errors
@@ -140,9 +150,9 @@ class Contact extends Component {
                     model=".lastname"
                     show="touched"
                     messages={{
-                      required: 'Required',
-                      minLength: 'Must be greater than 2 characters',
-                      maxLength: 'Must be 15 characters or less'
+                      required: "Required",
+                      minLength: "Must be greater than 2 characters",
+                      maxLength: "Must be 15 characters or less"
                     }}
                   />
                 </Col>
@@ -159,7 +169,10 @@ class Contact extends Component {
                     placeholder="Tel. Number"
                     className="form-control"
                     validators={{
-                      required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                      required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(15),
+                      isNumber
                     }}
                   />
                   <Errors
@@ -167,10 +180,10 @@ class Contact extends Component {
                     model=".telnum"
                     show="touched"
                     messages={{
-                      required: 'Required',
-                      minLength: 'Must be greater than 2 numbers',
-                      maxLength: 'Must be 15 numbers or less',
-                      isNumber: 'Must be a number'
+                      required: "Required",
+                      minLength: "Must be greater than 2 numbers",
+                      maxLength: "Must be 15 numbers or less",
+                      isNumber: "Must be a number"
                     }}
                   />
                 </Col>
@@ -187,7 +200,8 @@ class Contact extends Component {
                     placeholder="Email"
                     className="form-control"
                     validators={{
-                      required, validEmail
+                      required,
+                      validEmail
                     }}
                   />
                   <Errors
@@ -195,8 +209,8 @@ class Contact extends Component {
                     model=".email"
                     show="touched"
                     messages={{
-                      required: 'Required',
-                      validEmail: 'Invalid Email Address'
+                      required: "Required",
+                      validEmail: "Invalid Email Address"
                     }}
                   />
                 </Col>
@@ -246,11 +260,12 @@ class Contact extends Component {
                   </Button>
                 </Col>
               </Row>
-            </LocalForm>
+            </Form>
           </div>
         </div>
       </div>
     );
   }
 }
+
 export default Contact;

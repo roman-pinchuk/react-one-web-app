@@ -10,10 +10,12 @@ import { connect } from "react-redux";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import {
   postComment,
+  postFeedback,
   fetchDishes,
   fetchComments,
-  fetchPromos
-} from "../redux/ActionCreators";
+  fetchPromos,
+  fetchLeaders
+} from "../redux/ActionCreators.js";
 import { actions } from "react-redux-form";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -29,6 +31,7 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
 
   render() {
@@ -43,10 +46,15 @@ class Main extends Component {
           }
           promoLoading={this.props.promotions.isLoading}
           promoErrMess={this.props.promotions.errMess}
-          leader={this.props.leaders.filter(leader => leader.featured)[0]}
+          leader={
+            this.props.leaders.leaders.filter(leader => leader.featured)[0]
+          }
+          leaderLoading={this.props.leaders.isLoading}
+          leaderErrMess={this.props.leaders.errMess}
         />
       );
     };
+
     const DishWithId = ({ match }) => {
       return (
         <DishDetail
@@ -61,7 +69,7 @@ class Main extends Component {
             comment => comment.dishId === parseInt(match.params.dishId, 10)
           )}
           commentsErrMess={this.props.comments.errMess}
-          postComment={this.props.postComment}
+          postFeedback={this.props.postFeedback}
         />
       );
     };
@@ -107,8 +115,9 @@ class Main extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  postComment: (dishId, rating, author, comment) =>
+  postCommentt: (dishId, rating, author, comment) =>
     dispatch(postComment(dishId, rating, author, comment)),
+  postFeedback: feedback => dispatch(postFeedback(feedback)),
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
@@ -116,7 +125,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.reset("feedback"));
   },
   fetchComments: () => dispatch(fetchComments()),
-  fetchPromos: () => dispatch(fetchPromos())
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders())
 });
 
 export default withRouter(

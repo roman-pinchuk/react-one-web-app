@@ -215,6 +215,21 @@
       "comment": "dwdwdwdwdwd",
       "date": "2019-05-22T18:39:19.234Z",
       "id": 21
+    },
+    {
+      "dishId": 0,
+      "rating": "3",
+      "author": "btbtbtb",
+      "comment": "tbtbtbtbtb",
+      "date": "2019-05-22T20:30:26.986Z",
+      "id": 22
+    },
+    {
+      "dishId": 0,
+      "author": "dwdw",
+      "comment": "dwdwdwd",
+      "date": "2019-05-22T21:57:21.105Z",
+      "id": 23
     }
   ],
   "promotions": [
